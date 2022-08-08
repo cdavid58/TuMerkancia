@@ -1,0 +1,314 @@
+{% extends './base.html' %}
+{% load static  %}
+{% block content %}
+
+<div class="hero-wrap" style="background-image: url({% static 'images/bg_2.jpg' %});" data-stellar-background-ratio="0.5">
+      <div class="overlay"></div>
+      <div class="container">
+        <div class="row no-gutters slider-text align-items-center justify-content-center">
+          <div class="col-md-8 ftco-animate d-flex align-items-end">
+          	<div class="text w-100 text-center">
+	            <h1 class="mb-4">Buena <span>Bebida</span> para Buenos <span>Momentos</span>.</h1>
+	            <p><a href="#" class="btn btn-primary py-2 px-4">Comprar ahora</a> <a href="#" class="btn btn-white btn-outline-white py-2 px-4">Leer más</a></p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <section class="ftco-intro">
+    	<div class="container">
+    		<div class="row no-gutters">
+    			<div class="col-md-4 d-flex">
+    				<div class="intro d-lg-flex w-100 ftco-animate">
+    					<div class="icon">
+    						<span class="flaticon-support"></span>
+    					</div>
+    					<div class="text">
+    						<h2>SOPORTE EN LÍNEA 24 HORAS AL DÍA, 7 DÍAS A LA SEMANA</h2>
+    						<p>Un pequeño río llamado Duden fluye por su lugar y lo abastece de la regelialia necesaria.</p>
+    					</div>
+    				</div>
+    			</div>
+    			<div class="col-md-4 d-flex">
+    				<div class="intro color-1 d-lg-flex w-100 ftco-animate">
+    					<div class="icon">
+    						<span class="flaticon-cashback"></span>
+    					</div>
+    					<div class="text">
+    						<h2>GARANTÍA DE DEVOLUCIÓN DEL DINERO</h2>
+    						<p>Un pequeño río llamado Duden fluye por su lugar y lo abastece de la regelialia necesaria.</p>
+    					</div>
+    				</div>
+    			</div>
+    			<div class="col-md-4 d-flex">
+    				<div class="intro color-2 d-lg-flex w-100 ftco-animate">
+    					<div class="icon">
+    						<span class="flaticon-free-delivery"></span>
+    					</div>
+    					<div class="text">
+    						<h2>ENVÍO Y DEVOLUCIÓN &amp; GRATIS</h2>
+    						<p>Un pequeño río llamado Duden fluye por su lugar y lo abastece de la regelialia necesaria.</p>
+    					</div>
+    				</div>
+    			</div>
+    		</div>
+    	</div>
+    </section>
+
+    <section class="ftco-section ftco-no-pb">
+			<div class="container">
+				<div class="row">
+					<div class="col-md-6 img img-3 d-flex justify-content-center align-items-center" style="background-image: url({% static 'images/about.jpg' %});">
+					</div>
+					<div class="col-md-6 wrap-about pl-md-5 ftco-animate py-5">
+	          <div class="heading-section">
+	          	<span class="subheading">Desde 1905</span>
+	            <h2 class="mb-4">El deseo se encuentra con un nuevo gusto</h2>
+
+	            <p>Un pequeño río llamado Duden fluye por su lugar y lo abastece de la regelialia necesaria. Es un país paradisíaco, en el que partes tostadas de frases vuelan a tu boca.</p>
+	            <p>En su camino se encontró con una copia. La copia advertía al Little Blind Text, que de donde venía se habría reescrito mil veces y todo lo que quedaba de su origen sería la palabra "y" y el Little Blind Text debería dar la vuelta y volver a lo suyo, país seguro.</p>
+	            <p class="year">
+	            	<strong class="number" data-number="115">0</strong>
+		            <span>años de experiencia en negocios</span>
+	            </p>
+	          </div>
+
+					</div>
+				</div>
+			</div>
+		</section>
+
+		<section class="ftco-section ftco-no-pb">
+			<div class="container">
+				<div class="row">
+					{% for i in categorias %}
+						<div class="col-lg-2 col-md-4 ">
+							<div class="sort w-100 text-center ftco-animate">
+								<div class="img" style="background-image: url({{i.imagen.url}});"></div>
+								<h3>{{i.name}}</h3>
+							</div>
+						</div>
+					{% endfor %}
+
+				</div>
+			</div>
+		</section>
+
+		<section class="ftco-section">
+			<div class="container">
+				<div class="row justify-content-center pb-5">
+          <div class="col-md-7 heading-section text-center ftco-animate">
+          	<span class="subheading">Nuestras deliciosas ofertas</span>
+            <h2>Con mucho gusto tuyo</h2>
+          </div>
+        </div>
+				<div class="row">
+					{% for i in producto %}
+						<div class="col-md-3 d-flex">
+							<div class="product ftco-animate">
+								<div class="img d-flex align-items-center justify-content-center" style="background-image: url({{i.imagen.url}});">
+									<div class="desc">
+										<p class="meta-prod d-flex">
+											<a href="{% url 'Products_Single' i.pk %}" title="Agregar al Carrito" class="d-flex align-items-center justify-content-center"><span class="flaticon-shopping-bag"></span></a>
+										</p>
+									</div>
+								</div>
+								<div class="text text-center">
+                  {% if mv %}
+                    {% for j in mv %}
+									     {% if i.pk == j.producto.pk %}
+                          {% if j.cantidad > '20' %}
+                            <span class="sale">Más Vendido</span>
+                          {% endif %}
+                       {% endif %}
+                    {% endfor %}
+                  {% endif %}
+                  {% if i.nuevo %}
+                      <span class="new">Nuevo</span>
+                    {% endif %}
+									<span class="category">{{i.categoria.name}}</span>
+									<h2>{{i.name}}</h2>
+									<p class="mb-0"><!-- <span class="price price-sale">$69.00</span> --> <span class="price">${{i.precio}}</span></p>
+								</div>
+							</div>
+						</div>
+					{% endfor %}
+				</div>
+				<div class="row justify-content-center">
+					<div class="col-md-4">
+						<a href="{% url 'Lista_Productos' 0 %}" class="btn btn-primary d-block">Ver todos los productos <span class="fa fa-long-arrow-right"></span></a>
+					</div>
+				</div>
+			</div>
+		</section>
+  
+    <!-- <section class="ftco-section testimony-section img" style="background-image: url({% static 'images/bg_4.jpg);">' %}
+    	<div class="overlay"></div>
+      <div class="container">
+        <div class="row justify-content-center mb-5">
+          <div class="col-md-7 text-center heading-section heading-section-white ftco-animate">
+          	<span class="subheading">Testimonial</span>
+            <h2 class="mb-3">Happy Clients</h2>
+          </div>
+        </div>
+        <div class="row ftco-animate">
+          <div class="col-md-12">
+            <div class="carousel-testimony owl-carousel ftco-owl">
+              <div class="item">
+                <div class="testimony-wrap py-4">
+                	<div class="icon d-flex align-items-center justify-content-center"><span class="fa fa-quote-left"></div>
+                  <div class="text">
+                    <p class="mb-4">Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts.</p>
+                    <div class="d-flex align-items-center">
+                    	<div class="user-img" style="background-image: url({% static 'images/person_1.jpg' %})"></div>
+                    	<div class="pl-3">
+		                    <p class="name">Roger Scott</p>
+		                    <span class="position">Marketing Manager</span>
+		                  </div>
+	                  </div>
+                  </div>
+                </div>
+              </div>
+              <div class="item">
+                <div class="testimony-wrap py-4">
+                	<div class="icon d-flex align-items-center justify-content-center"><span class="fa fa-quote-left"></div>
+                  <div class="text">
+                    <p class="mb-4">Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts.</p>
+                    <div class="d-flex align-items-center">
+                    	<div class="user-img" style="background-image: url({% static 'images/person_2.jpg' %})"></div>
+                    	<div class="pl-3">
+		                    <p class="name">Roger Scott</p>
+		                    <span class="position">Marketing Manager</span>
+		                  </div>
+	                  </div>
+                  </div>
+                </div>
+              </div>
+              <div class="item">
+                <div class="testimony-wrap py-4">
+                	<div class="icon d-flex align-items-center justify-content-center"><span class="fa fa-quote-left"></div>
+                  <div class="text">
+                    <p class="mb-4">Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts.</p>
+                    <div class="d-flex align-items-center">
+                    	<div class="user-img" style="background-image: url({% static 'images/person_3.jpg' %})"></div>
+                    	<div class="pl-3">
+		                    <p class="name">Roger Scott</p>
+		                    <span class="position">Marketing Manager</span>
+		                  </div>
+	                  </div>
+                  </div>
+                </div>
+              </div>
+              <div class="item">
+                <div class="testimony-wrap py-4">
+                	<div class="icon d-flex align-items-center justify-content-center"><span class="fa fa-quote-left"></div>
+                  <div class="text">
+                    <p class="mb-4">Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts.</p>
+                    <div class="d-flex align-items-center">
+                    	<div class="user-img" style="background-image: url({% static 'images/person_1.jpg' %})"></div>
+                    	<div class="pl-3">
+		                    <p class="name">Roger Scott</p>
+		                    <span class="position">Marketing Manager</span>
+		                  </div>
+	                  </div>
+                  </div>
+                </div>
+              </div>
+              <div class="item">
+                <div class="testimony-wrap py-4">
+                	<div class="icon d-flex align-items-center justify-content-center"><span class="fa fa-quote-left"></div>
+                  <div class="text">
+                    <p class="mb-4">Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts.</p>
+                    <div class="d-flex align-items-center">
+                    	<div class="user-img" style="background-image: url({% static 'images/person_2.jpg' %})"></div>
+                    	<div class="pl-3">
+		                    <p class="name">Roger Scott</p>
+		                    <span class="position">Marketing Manager</span>
+		                  </div>
+	                  </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section> -->
+
+
+		
+    <!-- <section class="ftco-section">
+      <div class="container">
+        <div class="row justify-content-center mb-5">
+          <div class="col-md-7 heading-section text-center ftco-animate">
+          	<span class="subheading">Blog</span>
+            <h2>Recent Blog</h2>
+          </div>
+        </div>
+        <div class="row d-flex">
+          <div class="col-lg-6 d-flex align-items-stretch ftco-animate">
+          	<div class="blog-entry d-flex">
+          		<a href="blog-single.html" class="block-20 img" style="background-image: url({% static 'images/image_1.jpg' %});">
+              </a>
+              <div class="text p-4 bg-light">
+              	<div class="meta">
+              		<p><span class="fa fa-calendar"></span> 23 April 2020</p>
+              	</div>
+                <h3 class="heading mb-3"><a href="#">The Recipe from a Winemaker’s Restaurent</a></h3>
+                <p>A small river named Duden flows by their place and supplies it with the necessary regelialia.</p>
+                <a href="#" class="btn-custom">Continue <span class="fa fa-long-arrow-right"></span></a>
+
+              </div>
+            </div>
+          </div>
+          <div class="col-lg-6 d-flex align-items-stretch ftco-animate">
+          	<div class="blog-entry d-flex">
+          		<a href="blog-single.html" class="block-20 img" style="background-image: url({% static 'images/image_2.jpg' %});">
+              </a>
+              <div class="text p-4 bg-light">
+              	<div class="meta">
+              		<p><span class="fa fa-calendar"></span> 23 April 2020</p>
+              	</div>
+                <h3 class="heading mb-3"><a href="#">The Recipe from a Winemaker’s Restaurent</a></h3>
+                <p>A small river named Duden flows by their place and supplies it with the necessary regelialia.</p>
+                <a href="#" class="btn-custom">Continue <span class="fa fa-long-arrow-right"></span></a>
+
+              </div>
+            </div>
+          </div>
+          <div class="col-lg-6 d-flex align-items-stretch ftco-animate">
+          	<div class="blog-entry d-flex">
+          		<a href="blog-single.html" class="block-20 img" style="background-image: url({% static 'images/image_3.jpg' %});">
+              </a>
+              <div class="text p-4 bg-light">
+              	<div class="meta">
+              		<p><span class="fa fa-calendar"></span> 23 April 2020</p>
+              	</div>
+                <h3 class="heading mb-3"><a href="#">The Recipe from a Winemaker’s Restaurent</a></h3>
+                <p>A small river named Duden flows by their place and supplies it with the necessary regelialia.</p>
+                <a href="#" class="btn-custom">Continue <span class="fa fa-long-arrow-right"></span></a>
+
+              </div>
+            </div>
+          </div>
+          <div class="col-lg-6 d-flex align-items-stretch ftco-animate">
+          	<div class="blog-entry d-flex">
+          		<a href="blog-single.html" class="block-20 img" style="background-image: url({% static 'images/image_4.jpg' %});">
+              </a>
+              <div class="text p-4 bg-light">
+              	<div class="meta">
+              		<p><span class="fa fa-calendar"></span> 23 April 2020</p>
+              	</div>
+                <h3 class="heading mb-3"><a href="#">The Recipe from a Winemaker’s Restaurent</a></h3>
+                <p>A small river named Duden flows by their place and supplies it with the necessary regelialia.</p>
+                <a href="#" class="btn-custom">Continue <span class="fa fa-long-arrow-right"></span></a>
+
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>	 -->
+
+{% endblock %}

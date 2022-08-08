@@ -1,0 +1,124 @@
+{% extends './base.html' %}
+{% load static %}
+{% block content %}
+
+    
+    <section class="hero-wrap hero-wrap-2" style="background-image: url({% static 'images/bg_2.jpg' %});" data-stellar-background-ratio="0.5">
+      <div class="overlay"></div>
+      <div class="container">
+        <div class="row no-gutters slider-text align-items-end justify-content-center">
+          <div class="col-md-9 ftco-animate mb-5 text-center">
+          	<p class="breadcrumbs mb-0"><span class="mr-2"><a href="{% url 'home' %}">Home <i class="fa fa-chevron-right"></i></a></span> <span><a href="{% url 'Lista_Productos' producto.categoria.pk %}">Productos <i class="fa fa-chevron-right"></i></a></span> <span>Producto <i class="fa fa-chevron-right"></i></span></p>
+            <h2 class="mb-0 bread">Producto</h2>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="ftco-section">
+    	<div class="container">
+    		<div class="row">
+    			<div class="col-lg-6 mb-5 ftco-animate">
+    				<a href="images/prod-1.jpg" class="image-popup prod-img-bg"><img src="{{producto.imagen.url}}" class="img-fluid" alt="Colorlib Template"></a>
+    			</div>
+    			<div class="col-lg-6 product-details pl-md-5 ftco-animate">
+    				<h3>{{producto.name}}</h3>
+    				<!-- <div class="rating d-flex">
+							<p class="text-left mr-4">
+								<a href="#" class="mr-2">5.0</a>
+								<a href="#"><span class="fa fa-star"></span></a>
+								<a href="#"><span class="fa fa-star"></span></a>
+								<a href="#"><span class="fa fa-star"></span></a>
+								<a href="#"><span class="fa fa-star"></span></a>
+								<a href="#"><span class="fa fa-star"></span></a>
+							</p>
+							<p class="text-left mr-4">
+								<a href="#" class="mr-2" style="color: #000;">100 <span style="color: #bbb;">Rating</span></a>
+							</p>
+							<p class="text-left">
+								<a href="#" class="mr-2" style="color: #000;">500 <span style="color: #bbb;">Sold</span></a>
+							</p>
+						</div> -->
+    				<p class="price"><span>${{producto.precio}}</span></p>
+    				<p>Bacardi 151 es un ron de alta graduación, 75.5%Vol, mucho mas que el ron normal de 40%. Esta alta graduación hace que no esté disponible a la venta en muchos paises. La botella esta cargada de mensajes sobre su alta inflamabilidad, incluso lleva un tapón especial para evitar defragaciones.
+
+Creado por Bacardi para determinados cócteles que necesitan un ron de alta graduación pero con un gran sabor. Destilado de la fermantación de melaza y envejecido en barricas de roble durante 1 año. Por su alto contenido alcohólico se usa tradicionalmente en cocktails que necesitan sabor extra, pero no hay razón para no tomarlo mezclado o para los amantes del ron, tomarlo sólo, si puedes con el.
+					</p>
+						<div class="row mt-4">
+							<div class="input-group col-md-6 d-flex mb-3">
+	             	<span class="input-group-btn mr-2">
+	                	<button type="button" class="quantity-left-minus btn"  data-type="minus" data-field="">
+	                   <i class="fa fa-minus"></i>
+	                	</button>
+	            		</span>
+	             	<input type="text" id="quantity" name="quantity" class="quantity form-control input-number" value="1" min="1" max="100">
+	             	<span class="input-group-btn ml-2">
+	                	<button type="button" class="quantity-right-plus btn" data-type="plus" data-field="">
+	                     <i class="fa fa-plus"></i>
+	                 </button>
+	             	</span>
+	          	</div>
+	          	<div class="w-100"></div>
+	          	<div class="col-md-12">
+	          		<p style="color: #000;">{{producto.cantidad}} unidades disponibles</p>
+	          	</div>
+          	</div>
+          	<p><a href="" id="add" class="btn btn-primary py-3 px-5 mr-2">Añadir al carrito</a><!-- <a href="cart.html" class="btn btn-primary py-3 px-5">Buy now</a></p> -->
+    			</div>
+    		</div>
+
+    	</div>
+    </section>
+
+{% endblock %}
+{% block script %}
+  <script>
+		$(document).ready(function(){
+
+		var quantitiy=0;
+		   $('.quantity-right-plus').click(function(e){
+		        
+		        // Stop acting like a button
+		        e.preventDefault();
+		        // Get the field name
+		        var quantity = parseInt($('#quantity').val());
+		        
+		        // If is not undefined
+		            
+		            $('#quantity').val(quantity + 1);
+
+		          
+		            // Increment
+		        
+		    });
+
+		     $('.quantity-left-minus').click(function(e){
+		        // Stop acting like a button
+		        e.preventDefault();
+		        // Get the field name
+		        var quantity = parseInt($('#quantity').val());
+		        
+		        // If is not undefined
+		      
+		            // Increment
+		            if(quantity>0){
+		            $('#quantity').val(quantity - 1);
+		            }
+		    });
+
+		    $("#add").click(function(e){
+		    	e.preventDefault();
+		    	var cant = $("#quantity").val();
+			    $.ajax({
+			    	url: "/Products_Single/{{producto.pk}}/",
+			    	data: {'cantidad':cant, 'producto':'{{producto.pk}}'} ,
+			    	success:function(data){
+			    		$("#cantidaShopping").text(data);
+			    		location.reload(true);    		
+			    	}
+			    });
+		    });
+		    
+		});
+	</script>
+{% endblock %}

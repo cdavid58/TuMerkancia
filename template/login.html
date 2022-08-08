@@ -1,0 +1,65 @@
+{% extends './base.html' %}
+{% load static %}
+{% block content %}
+
+<section class="hero-wrap hero-wrap-2" style="background-image: url({% static 'images/bg_2.jpg' %});" data-stellar-background-ratio="0.5">
+  <div class="overlay"></div>
+  <div class="container">
+    <div class="row no-gutters slider-text align-items-end justify-content-center">
+      <div class="col-md-9 ftco-animate mb-5 text-center">
+      	<p class="breadcrumbs mb-0"><span class="mr-2"><a href="{% url 'home' %}">Home <i class="fa fa-chevron-right"></i></a></span> <span>Inicio de Sesión <i class="fa fa-chevron-right"></i></span></p>
+        <h2 class="mb-0 bread">Inicio de Sesión</h2>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="ftco-section">
+	<div class="container">
+		<div class="row justify-content-center">
+			<div class="col-xl-10 ftco-animate">
+				<form action="#" method="post" id="formulario" class="billing-form">{% csrf_token %}
+					<h3 class="mb-4 billing-heading">Inicia Sesión</h3>
+					<div class="row align-items-end">
+						<div class="col-md-12">
+							<div class="form-group">
+								<label for="firstname">Teléfono</label>
+								<input type="text" id="telefono" class="form-control" placeholder="" name="telefono" autofocus required>
+							</div>
+						</div>
+						<div class="col-md-6">
+						    <div class="p-3 p-md-4">
+								<p><a id="entrar" href=""class="btn btn-primary py-3 px-4" id="enviar">Ingresar</a></p>
+							</div>
+						</div>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+	
+</section>
+
+
+{% endblock %}
+{% block script %}
+	<script>
+		$(document).ready(function(){
+			if('{{error}}' == 'True'){
+				$.notify("Usuario no registrado",{ position:"right" });
+			}
+			$("#entrar").click(function(e){
+				e.preventDefault();
+				var dato_a_comprobar = $("#telefono").val();
+				var valoresAceptados = /^[0-9]+$/;
+				if (dato_a_comprobar.match(valoresAceptados)){
+					$("#formulario").submit();
+				} else {
+				 $.notify("No es un número valido",{ position:"right" });
+				}
+			});
+		});
+	</script>
+
+{% endblock %}
+
